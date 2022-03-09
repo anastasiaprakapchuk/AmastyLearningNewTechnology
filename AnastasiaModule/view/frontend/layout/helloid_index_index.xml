@@ -5,8 +5,6 @@
     <body>
         <referenceContainer name="content">
             <block name="anastasiaModule.mainblock" template="Amasty_AnastasiaModule::index.phtml"/>
-
-
         </referenceContainer>
     </body>
 </page>
