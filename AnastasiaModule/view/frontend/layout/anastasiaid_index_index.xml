@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Amasty_AnastasiaModule::css/main.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <container name="anastasiaModule.main" htmlTag="div" htmlClass="container-add-form">
+                <block name="anastasiaModule.hello" template="Amasty_AnastasiaModule::hello.phtml"/>
+                <block name="anastasiaModule.form" class="Amasty\AnastasiaModule\Block\Form"
+                       template="Amasty_AnastasiaModule::form.phtml">
+                    <arguments>
+                        <argument name="css_form_class" xsi:type="string">css-form-class</argument>
+                        <argument name="css_input_class" xsi:type="string">css-input-class</argument>
+                        <argument name="css_submit_class" xsi:type="string">css-submit-class</argument>
+                        <argument name="css_text_class" xsi:type="string">css-text-class</argument>
+                    </arguments>
+                    <block name="anastasiaModule.additional" template="Amasty_AnastasiaModule::additional.phtml"/>
+                </block>
+            </container>
+
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,25 @@
+<?php
+/** @var Amasty\AnastasiaModule\Block\Form $block */
+/** @var string $cssFormClass */
+/** @var string $cssInputClass */
+/** @var string $cssSubmitClass */
+/** @var string $cssTextClass */
+
+$cssFormClass = $block->hasCssFormClass() ? ' ' . $block->getCssFormClass() : '';
+$cssInputClass = $block->hasCssInputClass() ? ' ' . $block->getCssInputClass() : '';
+$cssSubmitClass = $block->hasCssSubmitClass() ? ' ' . $block->getCssSubmitClass() : '';
+$cssTextClass = $block->hasCssTextClass() ? ' ' . $block->getCssTextClass() : '';
+?>
+
+<form class="<?= $cssFormClass ?>">
+    <label>
+        <input type="text" name="sku" class="<?= $cssInputClass ?>"/>
+    </label>
+    <label>
+        <input type="number" name="qty" class="<?= $cssInputClass ?>"/>
+    </label>
+    <div class="<?= $cssTextClass ?>"><?= $block->getChildHtml(); ?></div>
+    <input type="submit" value="Отправить" class="<?= $cssSubmitClass ?>"/>
+</form>
+
+

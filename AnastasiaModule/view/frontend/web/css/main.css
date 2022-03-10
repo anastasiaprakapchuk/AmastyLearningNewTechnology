@@ -1,0 +1,26 @@
+.anastasiaid-index-index {
+    border: 10px solid #f3793b;
+}
+
+.css-form-class {
+    background: #8bc34a;
+    padding: 20px 20px;
+    width: 300px;
+}
+
+.css-input-class {
+    margin-bottom: 20px;
+}
+
+.css-submit-class {
+    width: 300px;
+    background: #1d7a4d;
+    height: 32px;
+    border: none;
+    color: white;
+    font-size: 14px;
+}
+
+.css-text-class {
+    padding-bottom: 20px;
+}
