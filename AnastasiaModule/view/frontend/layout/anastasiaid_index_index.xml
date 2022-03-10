@@ -11,12 +11,6 @@
                 <block name="anastasiaModule.hello" template="Amasty_AnastasiaModule::hello.phtml"/>
                 <block name="anastasiaModule.form" class="Amasty\AnastasiaModule\Block\Form"
                        template="Amasty_AnastasiaModule::form.phtml">
-                    <arguments>
-                        <argument name="css_form_class" xsi:type="string">css-form-class</argument>
-                        <argument name="css_input_class" xsi:type="string">css-input-class</argument>
-                        <argument name="css_submit_class" xsi:type="string">css-submit-class</argument>
-                        <argument name="css_text_class" xsi:type="string">css-text-class</argument>
-                    </arguments>
                     <block name="anastasiaModule.additional" template="Amasty_AnastasiaModule::additional.phtml"/>
                 </block>
             </container>
