@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="Amasty_AnastasiaModule" translate="label" sortOrder="10">
+            <label>Amasty Anastasia Module</label>
+        </tab>
+        <section id="anastasia_config" translate="label" sortOrder="2" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>Anastasia Module Config</label>
+            <tab>Amasty_AnastasiaModule</tab>
+            <resource>Amasty_AnastasiaModule::config</resource>
+            <group id="general" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="enabled" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Is Module Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="greeting_text" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Greeting Text</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="enabled_qty" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Is QTY enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="qty_default" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>QTY default field value</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="enabled_qty">1</field>
+                    </depends>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>

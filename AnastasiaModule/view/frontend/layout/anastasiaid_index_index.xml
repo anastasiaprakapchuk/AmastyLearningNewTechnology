@@ -8,7 +8,8 @@
     <body>
         <referenceContainer name="content">
             <container name="anastasiaModule.main" htmlTag="div" htmlClass="container-add-form">
-                <block name="anastasiaModule.hello" template="Amasty_AnastasiaModule::hello.phtml"/>
+                <block name="anastasiaModule.hello" class="Amasty\AnastasiaModule\Block\Greeting"
+                       template="Amasty_AnastasiaModule::hello.phtml"/>
                 <block name="anastasiaModule.form" class="Amasty\AnastasiaModule\Block\Form"
                        template="Amasty_AnastasiaModule::form.phtml">
                     <arguments>

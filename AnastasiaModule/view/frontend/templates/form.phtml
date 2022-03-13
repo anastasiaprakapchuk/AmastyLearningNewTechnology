@@ -15,9 +15,13 @@ $cssTextClass = $block->hasCssTextClass() ? ' ' . $block->getCssTextClass() : ''
     <label>
         <input type="text" name="sku" class="<?= $cssInputClass ?>"/>
     </label>
-    <label>
-        <input type="number" name="qty" class="<?= $cssInputClass ?>"/>
-    </label>
+
+    <?php if ($block->isEnabledQty()) { ?>
+        <label>
+            <input type="number" name="qty" class="<?= $cssInputClass ?>" value="<?= $block->getDefaultQty(); ?>"/>
+        </label>
+    <?php } ?>
+
     <div class="<?= $cssTextClass ?>"><?= $block->getChildHtml(); ?></div>
     <input type="submit" value="Отправить" class="<?= $cssSubmitClass ?>"/>
 </form>
