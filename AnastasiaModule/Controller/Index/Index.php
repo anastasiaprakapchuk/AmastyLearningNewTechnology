@@ -6,18 +6,20 @@ namespace Amasty\AnastasiaModule\Controller\Index;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\App\Config\ScopeConfigInterface;
+
+//use Magento\Framework\App\Config\ScopeConfigInterface;
+use Amasty\AnastasiaModule\Helper\ConfigProvider;
 
 class Index extends Action
 {
     /**
-     * @var ScopeConfigInterface
+     * @var ConfigProvider
      */
     private $scopeConfig;
 
     public function __construct(
-        Context              $context,
-        ScopeConfigInterface $scopeConfig
+        Context        $context,
+        ConfigProvider $scopeConfig
     )
     {
         $this->scopeConfig = $scopeConfig;
@@ -26,7 +28,7 @@ class Index extends Action
 
     public function execute()
     {
-        if ($this->scopeConfig->isSetFlag('anastasia_config/general/enabled')) {
+        if ($this->scopeConfig->getIsEnabled()) {
             return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         } else {
             die('Sorry, module disabled!');
