@@ -11,13 +11,15 @@ $cssSubmitClass = $block->hasCssSubmitClass() ? ' ' . $block->getCssSubmitClass(
 $cssTextClass = $block->hasCssTextClass() ? ' ' . $block->getCssTextClass() : '';
 ?>
 
-<form class="<?= $cssFormClass ?>">
+<form name="form_checkout" id="formCheckout" class="<?= $cssFormClass ?>" action="<?php echo $this->getUrl() . 'anastasia/cart/add'; ?>" method="post">
     <label>
+        Enter SKU:
         <input type="text" name="sku" class="<?= $cssInputClass ?>"/>
     </label>
 
     <?php if ($block->isEnabledQty()) { ?>
         <label>
+            Enter QTY:
             <input type="number" name="qty" class="<?= $cssInputClass ?>" value="<?= $block->getDefaultQty(); ?>"/>
         </label>
     <?php } ?>
