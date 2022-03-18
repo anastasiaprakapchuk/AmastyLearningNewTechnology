@@ -8,6 +8,7 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
+use Magento\Setup\Exception;
 
 
 class Add extends Action
@@ -38,13 +39,13 @@ class Add extends Action
         CheckoutSession            $session,
         ProductRepositoryInterface $productRepository,
         RedirectFactory            $resultRedirectFactory,
-        StockItemRepository $stockItemRepository
+        StockItemRepository        $stockItemRepository
     )
     {
         $this->session = $session;
         $this->productRepository = $productRepository;
         $this->resultRedirectFactory = $resultRedirectFactory;
-        $this->stockItemRepository=$stockItemRepository;
+        $this->stockItemRepository = $stockItemRepository;
         parent::__construct($context);
     }
 
@@ -55,41 +56,47 @@ class Add extends Action
         $sku = $data['sku'];
         $qty = $data['qty'];
 
-        //получаем продукт по sku
-        try{
+        $messageManager = $this->messageManager;
+
+        try {
+
             $product = $this->productRepository->get($sku);
-            $productId=$product->getId();
+            $productId = $product->getId();
             $productStock = $this->stockItemRepository->get($productId);;
-            $maxProducts=$productStock->getQty();
+            $maxProducts = $productStock->getQty();
 
+            //проверяем некоторые условия
 
-        //проверяем некоторые условия
+            if ($product->getTypeId() !== 'simple') {
 
-        if($product->getTypeId()!=='simple'){
-            $this->messageManager->addWarningMessage('The product must be simple!');
-        }
+                $messageManager->addWarningMessage('This product must be simple!');
 
-        else if($maxProducts<$qty){
-            $this->messageManager->addWarningMessage("You can order a maximum of $maxProducts products!");
-        }
+            } else if ($maxProducts < $qty) {
 
-        else{
-            //сохраняем
-            $quote = $this->session->getQuote();
-            if (!$quote->getId()) {
+                $messageManager->addWarningMessage("You can order a maximum of $maxProducts products!");
+
+            } else {
+
+                //сохраняем
+                $quote = $this->session->getQuote();
+                if (!$quote->getId()) {
+                    $quote->save();
+                }
+                $quote->addProduct($product, $qty);
                 $quote->save();
+                $messageManager->addSuccessMessage('Product added to cart successfully!');
+
             }
-            $quote->addProduct($product, $qty);
-            $quote->save();
-        }
-        }
-        catch (Exeption $ex){
-            $this->messageManager->addWarningMessage('This product does not exist!');
+        } catch (\Exception $e) {
+
+            $messageManager->addErrorMessage('This product does not exist!');
+
         } finally {
+
             //редирект на страницу с формой
             $resultRedirect = $this->resultRedirectFactory->create();
             return $resultRedirect->setPath('anastasia');
-        }
 
+        }
     }
 }

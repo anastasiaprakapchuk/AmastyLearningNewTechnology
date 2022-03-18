@@ -11,21 +11,37 @@ $cssSubmitClass = $block->hasCssSubmitClass() ? ' ' . $block->getCssSubmitClass(
 $cssTextClass = $block->hasCssTextClass() ? ' ' . $block->getCssTextClass() : '';
 ?>
 
-<form name="form_checkout" id="formCheckout" class="<?= $cssFormClass ?>" action="<?php echo $this->getUrl() . 'anastasia/cart/add'; ?>" method="post">
-    <label>
-        Enter SKU:
-        <input type="text" name="sku" class="<?= $cssInputClass ?>" class="required-entry"/>
-    </label>
+<form name="form_checkout" id="formCheckout" class="<?= $cssFormClass ?>"
+      action="<?php echo $this->getUrl() . 'anastasia/cart/add'; ?>" method="post" data-mage-init='{"validation": {}}'>
+    <fieldset class="fieldset">
+        <div class="field name required">
+            <label for="sku">Enter SKU:</label>
+            <div class="control">
+                <input type="text" name="sku" value="" class="<?= $cssInputClass ?> required-entry"/>
+            </div>
+        </div>
 
-    <?php if ($block->isEnabledQty()) { ?>
-        <label>
-            Enter QTY:
-            <input type="number" name="qty" class="<?= $cssInputClass ?>" value="<?= $block->getDefaultQty(); ?>" class="required-entry validate-greater-than-zero"/>
-        </label>
-    <?php } ?>
+        <div class="field name required">
+            <?php if ($block->isEnabledQty()) { ?>
+                <label for="qty">Enter QTY:</label>
+                <div class="control">
+                    <input type="number" name="qty"
+                           class="<?= $cssInputClass ?> required-entry validate-greater-than-zero"
+                           value="<?= $block->getDefaultQty(); ?>"/>
+                </div>
+            <?php } ?>
+        </div>
+        <div class="<?= $cssTextClass ?>"><?= $block->getChildHtml(); ?></div>
+    </fieldset>
 
-    <div class="<?= $cssTextClass ?>"><?= $block->getChildHtml(); ?></div>
-    <input type="submit" value="Отправить" class="<?= $cssSubmitClass ?>"/>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" title="Submit" class="<?= $cssSubmitClass ?> action submit primary">
+                <span>Submit</span>
+            </button>
+        </div>
+    </div>
+
 </form>
 
 
