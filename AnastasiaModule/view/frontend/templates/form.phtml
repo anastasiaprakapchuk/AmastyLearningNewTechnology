@@ -22,14 +22,14 @@ $cssTextClass = $block->hasCssTextClass() ? ' ' . $block->getCssTextClass() : ''
         </div>
 
         <div class="field name required">
-            <?php if ($block->isEnabledQty()) { ?>
+            <?php if ($block->isEnabledQty()) : ?>
                 <label for="qty">Enter QTY:</label>
                 <div class="control">
                     <input type="number" name="qty"
                            class="<?= $cssInputClass ?> required-entry validate-greater-than-zero"
                            value="<?= $block->getDefaultQty(); ?>"/>
                 </div>
-            <?php } ?>
+            <?php endif ?>
         </div>
         <div class="<?= $cssTextClass ?>"><?= $block->getChildHtml(); ?></div>
     </fieldset>
