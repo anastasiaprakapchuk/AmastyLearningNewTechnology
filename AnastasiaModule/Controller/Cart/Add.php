@@ -8,7 +8,8 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
-use Magento\Setup\Exception;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Catalog\Model\Product\Type;
 
 
 class Add extends Action
@@ -62,12 +63,12 @@ class Add extends Action
 
             $product = $this->productRepository->get($sku);
             $productId = $product->getId();
-            $productStock = $this->stockItemRepository->get($productId);;
+            $productStock = $this->stockItemRepository->get($productId);
             $maxProducts = $productStock->getQty();
 
             //проверяем некоторые условия
 
-            if ($product->getTypeId() !== 'simple') {
+            if ($product->getTypeId() !== Type::TYPE_SIMPLE) {
 
                 $messageManager->addWarningMessage('This product must be simple!');
 
@@ -87,7 +88,7 @@ class Add extends Action
                 $messageManager->addSuccessMessage('Product added to cart successfully!');
 
             }
-        } catch (\Exception $e) {
+        } catch (NoSuchEntityException $e) {
 
             $messageManager->addErrorMessage('This product does not exist!');
 
