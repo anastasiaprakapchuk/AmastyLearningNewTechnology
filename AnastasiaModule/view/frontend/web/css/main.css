@@ -1,15 +1,18 @@
-.anastasiaid-index-index {
+.page-wrapper {
     border: 10px solid #f3793b;
 }
 
 .css-form-class {
-    background: #8bc34a;
+    background: white;
+    -webkit-box-shadow: 5px 4px 19px 7px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 5px 4px 19px 7px rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 4px 19px 7px rgba(0, 0, 0, 0.2);
     padding: 20px 20px;
     width: 300px;
 }
 
 .css-input-class {
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
 
 .css-submit-class {
@@ -22,5 +25,5 @@
 }
 
 .css-text-class {
-    padding-bottom: 20px;
+    /*padding-bottom: 20px;*/
 }

@@ -11,19 +11,39 @@ $cssSubmitClass = $block->hasCssSubmitClass() ? ' ' . $block->getCssSubmitClass(
 $cssTextClass = $block->hasCssTextClass() ? ' ' . $block->getCssTextClass() : '';
 ?>
 
-<form class="<?= $cssFormClass ?>">
-    <label>
-        <input type="text" name="sku" class="<?= $cssInputClass ?>"/>
-    </label>
+<form name="form_checkout" id="formCheckout" class="<?= $cssFormClass ?>"
+      action="<?= $block->escapeUrl($block->getUrl('*/cart/add')) ?>"
+      method="post"
+      data-mage-init='{"validation": {}}'>
+    <fieldset class="fieldset">
+        <div class="field name required">
+            <label for="sku">Enter SKU:</label>
+            <div class="control">
+                <input type="text" name="sku" value="" class="<?= $cssInputClass ?> required-entry"/>
+            </div>
+        </div>
 
-    <?php if ($block->isEnabledQty()) { ?>
-        <label>
-            <input type="number" name="qty" class="<?= $cssInputClass ?>" value="<?= $block->getDefaultQty(); ?>"/>
-        </label>
-    <?php } ?>
+        <div class="field name required">
+            <?php if ($block->isEnabledQty()) : ?>
+                <label for="qty">Enter QTY:</label>
+                <div class="control">
+                    <input type="number" name="qty"
+                           class="<?= $cssInputClass ?> required-entry validate-greater-than-zero"
+                           value="<?= $block->getDefaultQty(); ?>"/>
+                </div>
+            <?php endif ?>
+        </div>
+        <div class="<?= $cssTextClass ?>"><?= $block->getChildHtml(); ?></div>
+    </fieldset>
 
-    <div class="<?= $cssTextClass ?>"><?= $block->getChildHtml(); ?></div>
-    <input type="submit" value="Отправить" class="<?= $cssSubmitClass ?>"/>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" title="Submit" class="<?= $cssSubmitClass ?> action submit primary">
+                <span>Submit</span>
+            </button>
+        </div>
+    </div>
+
 </form>
 
 
