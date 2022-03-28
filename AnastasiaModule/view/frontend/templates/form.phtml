@@ -18,8 +18,8 @@ $cssTextClass = $block->hasCssTextClass() ? ' ' . $block->getCssTextClass() : ''
     <fieldset class="fieldset">
         <div class="field name required">
             <label for="sku">Enter SKU:</label>
-            <div class="control">
-                <input type="text" name="sku" value="" class="<?= $cssInputClass ?> required-entry"/>
+            <div class="control" data-bind="scope: 'myAutocomplete'">
+                <!-- ko template: getTemplate() --><!-- /ko -->
             </div>
         </div>
 
@@ -45,5 +45,23 @@ $cssTextClass = $block->hasCssTextClass() ? ' ' . $block->getCssTextClass() : ''
     </div>
 
 </form>
+
+
+<script type="text/x-magento-init">
+   {
+       "*": {
+           "Magento_Ui/js/core/app": {
+               "components": {
+                   "myAutocomplete": {
+                       "component": "Amasty_AnastasiaModule/js/koAutocomplete",
+                       "template" : "Amasty_AnastasiaModule/koAutocomplete"
+                   }
+               }
+           }
+       }
+   }
+
+</script>
+
 
 

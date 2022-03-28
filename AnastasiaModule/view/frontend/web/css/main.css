@@ -27,3 +27,26 @@
 .css-text-class {
     /*padding-bottom: 20px;*/
 }
+
+.css-ul-autocomplete {
+    padding-inline-start: 0px;
+    margin-bottom: 0rem;
+}
+
+.css-li-autocomplete {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    border: 1px solid #c2c2c2;
+    border-top: none;
+    padding: 5px 5px;
+    margin-bottom: 0rem;
+    cursor: pointer;
+}
+
+.cool-autocomplete-list {
+    position: absolute;
+    background-color: white;
+    width: 300px;
+}
+

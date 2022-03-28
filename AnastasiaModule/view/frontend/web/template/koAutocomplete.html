@@ -1,0 +1,10 @@
+<input type="text" name="sku" class="required-entry" data-bind="textInput: searchText" autocomplete="off"/>
+<div class="cool-autocomplete-list">
+    <ul class="css-ul-autocomplete" data-bind="foreach: searchResult, visible:isFocused">
+        <li class="css-li-autocomplete">
+            <span data-bind="text: sku"></span>
+            <span data-bind="text: name"></span>
+        </li>
+    </ul>
+</div>
+
