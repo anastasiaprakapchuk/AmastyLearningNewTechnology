@@ -1,0 +1,10 @@
+<div id="timer">
+    <div id="timer-text">
+        <span data-bind="visible: hours()<10">0</span><span data-bind="text: hours"></span>:
+        <span data-bind="visible: minutes()<10">0</span><span data-bind="text: minutes"></span>:
+        <span data-bind="visible: seconds()<10">0</span><span data-bind="text: seconds"></span>
+    </div>
+    <button id="start" data-bind="click: handleStart">Старт</button>
+    <button id="stop" data-bind="click: handleStop">Стоп</button>
+    <button id="pause" data-bind="click: handlePause">Пауза</button>
+</div>
