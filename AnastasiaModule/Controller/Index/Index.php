@@ -3,19 +3,17 @@ declare(strict_types=1);
 
 namespace Amasty\AnastasiaModule\Controller\Index;
 
+use Amasty\AnastasiaModule\Model\ConfigProvider;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
-
-//use Magento\Framework\App\Config\ScopeConfigInterface;
-use Amasty\AnastasiaModule\Helper\ConfigProvider;
 
 class Index extends Action
 {
     /**
      * @var ConfigProvider
      */
-    private $scopeConfig;
+    protected $scopeConfig;
 
     public function __construct(
         Context        $context,

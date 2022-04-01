@@ -2,10 +2,8 @@
 
 namespace Amasty\AnastasiaModule\Block;
 
+use Amasty\AnastasiaModule\Model\ConfigProvider;
 use Magento\Framework\View\Element\Template;
-
-//use Magento\Framework\App\Config\ScopeConfigInterface;
-use Amasty\AnastasiaModule\Helper\ConfigProvider;
 
 class Greeting extends Template
 {
@@ -15,9 +13,9 @@ class Greeting extends Template
     private $scopeConfig;
 
     public function __construct(
-        Template\Context $context,
-        ConfigProvider   $scopeConfig,
-        array            $data = []
+        Template\Context      $context,
+        ConfigProvider        $scopeConfig,
+        array                 $data = []
     )
     {
         $this->scopeConfig = $scopeConfig;

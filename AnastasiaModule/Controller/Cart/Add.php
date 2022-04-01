@@ -10,6 +10,7 @@ use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\CatalogInventory\Model\Stock\StockItemRepository;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Catalog\Model\Product\Type;
+use Magento\Framework\Event\ManagerInterface;
 
 
 class Add extends Action
@@ -34,19 +35,26 @@ class Add extends Action
      */
     protected $stockItemRepository;
 
+    /**
+     * @var ManagerInterface
+     */
+    protected $eventManager;
+
 
     public function __construct(
         Context                    $context,
         CheckoutSession            $session,
         ProductRepositoryInterface $productRepository,
         RedirectFactory            $resultRedirectFactory,
-        StockItemRepository        $stockItemRepository
+        StockItemRepository        $stockItemRepository,
+        ManagerInterface           $eventManager
     )
     {
         $this->session = $session;
         $this->productRepository = $productRepository;
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->stockItemRepository = $stockItemRepository;
+        $this->eventManager = $eventManager;
         parent::__construct($context);
     }
 
@@ -85,7 +93,13 @@ class Add extends Action
                 }
                 $quote->addProduct($product, $qty);
                 $quote->save();
+
                 $messageManager->addSuccessMessage('Product added to cart successfully!');
+
+                $this->eventManager->dispatch(
+                    'amasty_anastasiamodule_checkaddproduct',
+                    ['check_sku' => $sku]
+                );
 
             }
         } catch (NoSuchEntityException $e) {

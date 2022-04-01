@@ -2,15 +2,14 @@
 
 namespace Amasty\AnastasiaModule\Block;
 
+use Amasty\AnastasiaModule\Model\ConfigProvider;
 use Magento\Framework\View\Element\Template;
-
-//use Magento\Framework\App\Config\ScopeConfigInterface;
-use Amasty\AnastasiaModule\Helper\ConfigProvider;
 
 class Form extends Template
 {
+    const FORM_ACTION = '*/cart/add';
     /**
-     * @var ConfigProvider
+     * @var \Amasty\AnastasiaModule\Model\ConfigProvider
      */
     private $scopeConfig;
 
@@ -32,6 +31,11 @@ class Form extends Template
     public function getDefaultQty()
     {
         return $this->scopeConfig->getDefaultQty();
+    }
+
+    public function getFormAction(): string
+    {
+        return self::FORM_ACTION;
     }
 }
 
