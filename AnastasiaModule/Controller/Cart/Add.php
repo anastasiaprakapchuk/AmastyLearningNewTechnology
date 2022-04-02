@@ -96,15 +96,9 @@ class Add extends Action
 
                 $messageManager->addSuccessMessage('Product added to cart successfully!');
 
-                $request = $this->_request;
-                die($request);
-
                 $this->eventManager->dispatch(
                     'amasty_anastasiamodule_checkaddproduct',
-                    [
-                        'check_sku' => $sku,
-                        'request' => $request
-                    ]
+                    ['check_sku' => $sku]
                 );
 
             }
@@ -115,8 +109,8 @@ class Add extends Action
         } finally {
 
             //редирект на страницу с формой
-//            $resultRedirect = $this->resultRedirectFactory->create();
-//            return $resultRedirect->setPath('anastasia');
+            $resultRedirect = $this->resultRedirectFactory->create();
+            return $resultRedirect->setPath('anastasia');
 
         }
     }
