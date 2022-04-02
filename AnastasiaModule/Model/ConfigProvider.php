@@ -1,6 +1,6 @@
 <?php
 
-namespace Amasty\AnastasiaModule\Helper;
+namespace Amasty\AnastasiaModule\Model;
 
 class ConfigProvider extends ConfigProviderAbstract
 {

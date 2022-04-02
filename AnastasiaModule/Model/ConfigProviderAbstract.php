@@ -1,6 +1,6 @@
 <?php
 
-namespace Amasty\AnastasiaModule\Helper;
+namespace Amasty\AnastasiaModule\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
