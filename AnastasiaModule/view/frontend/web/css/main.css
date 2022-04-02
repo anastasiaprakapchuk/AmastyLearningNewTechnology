@@ -50,3 +50,12 @@
     width: 300px;
 }
 
+#timer {
+    text-align: center;
+    font-weight: bold;
+}
+
+#timer-text {
+    padding-bottom: 10px;
+}
+

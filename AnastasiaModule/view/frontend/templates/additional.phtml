@@ -1,3 +1,19 @@
-<div>
-    Здесь будет таймер, который я сделаю в другом задании
+<div data-bind="scope: 'myTimer'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
 </div>
+
+<script type="text/x-magento-init">
+   {
+       "*": {
+           "Magento_Ui/js/core/app": {
+               "components": {
+                   "myTimer": {
+                       "component": "Amasty_AnastasiaModule/js/koTimer",
+                       "template" : "Amasty_AnastasiaModule/koTimer"
+                   }
+               }
+           }
+       }
+   }
+
+</script>
