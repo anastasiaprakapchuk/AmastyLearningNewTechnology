@@ -48,17 +48,14 @@ class Autocomplete extends Action
         $sku = $data['q'];
 
         try {
-            $productCollection = $this->productCollectionFactory->create();
-            $productCollection->addAttributeToFilter('sku', ['like' => $sku . '%']);
-            $productCollection->addAttributeToSelect('sku');
-            $productCollection->addAttributeToSelect('name');
-            $products = [];
+            $productCollection = $this->productCollectionFactory->create()
+                ->addAttributeToSelect(['sku', 'name'])
+                ->addAttributeToFilter('sku', ['like' => $sku . '%'])
+                ->setPageSize(5);
 
+            $products = [];
             foreach ($productCollection as $product) {
                 $products[] = ['sku' => $product->getSku(), 'name' => $product->getName()];
-                if (count($products) === 5) {
-                    break;
-                }
             }
 
             $resultJson = $this->resultJsonFactory->create();

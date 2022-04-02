@@ -24,17 +24,13 @@ define(['jquery', 'uiComponent', 'mage/url'], function ($, Component, urlBuilder
                 }, function (data) {
                     if (data.length) {
                         this.searchResult(data);
-                        $('body').on('click', '.css-li-autocomplete', this.processAutocomplete.bind(this));
                     } else {
                         this.searchResult([]);
                     }
                 }.bind(this));
         },
-
-        processAutocomplete: function (event) {
-            var elLi = event.currentTarget;
-            var valueElLi = $(elLi).find("span[data-bind='text: sku']").text();
-            this.searchText(valueElLi);
+        processAutocomplete: function (element) {
+            this.searchText(element.sku);
             this.isFocused(false);
         },
     });
