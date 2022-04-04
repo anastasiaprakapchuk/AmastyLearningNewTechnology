@@ -40,14 +40,20 @@ class Add extends Action
      */
     protected $eventManager;
 
+    /**
+     * @var \Amasty\AnastasiaModule\Model\ResourceModel\Blacklist\CollectionFactory
+     */
+    private $blacklistCollectionFactory;
+
 
     public function __construct(
-        Context                    $context,
-        CheckoutSession            $session,
-        ProductRepositoryInterface $productRepository,
-        RedirectFactory            $resultRedirectFactory,
-        StockItemRepository        $stockItemRepository,
-        ManagerInterface           $eventManager
+        Context                                                                 $context,
+        CheckoutSession                                                         $session,
+        ProductRepositoryInterface                                              $productRepository,
+        RedirectFactory                                                         $resultRedirectFactory,
+        StockItemRepository                                                     $stockItemRepository,
+        ManagerInterface                                                        $eventManager,
+        \Amasty\AnastasiaModule\Model\ResourceModel\Blacklist\CollectionFactory $blacklistCollectionFactory
     )
     {
         $this->session = $session;
@@ -55,6 +61,7 @@ class Add extends Action
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->stockItemRepository = $stockItemRepository;
         $this->eventManager = $eventManager;
+        $this->blacklistCollectionFactory = $blacklistCollectionFactory;
         parent::__construct($context);
     }
 
@@ -65,8 +72,6 @@ class Add extends Action
         $sku = $data['sku'];
         $qty = $data['qty'];
 
-        $messageManager = $this->messageManager;
-
         try {
 
             $product = $this->productRepository->get($sku);
@@ -74,37 +79,59 @@ class Add extends Action
             $productStock = $this->stockItemRepository->get($productId);
             $maxProducts = $productStock->getQty();
 
-            //проверяем некоторые условия
 
             if ($product->getTypeId() !== Type::TYPE_SIMPLE) {
 
-                $messageManager->addWarningMessage('This product must be simple!');
-
-            } else if ($maxProducts < $qty) {
-
-                $messageManager->addWarningMessage("You can order a maximum of $maxProducts products!");
+                $this->messageManager->addWarningMessage('This product must be simple!');
 
             } else {
 
-                //сохраняем
                 $quote = $this->session->getQuote();
                 if (!$quote->getId()) {
                     $quote->save();
                 }
-                $quote->addProduct($product, $qty);
-                $quote->save();
 
-                $messageManager->addSuccessMessage('Product added to cart successfully!');
+                $blacklistQty = $this->checkBlackList($sku);
 
-                $this->eventManager->dispatch(
-                    'amasty_anastasiamodule_checkaddproduct',
-                    ['check_sku' => $sku]
-                );
+                if ($blacklistQty) {
+
+                    $productInCart = $quote->getItemByProduct($product);
+
+                    $qtyInCart = $productInCart ? $productInCart->getQty() : 0;
+
+                    $totalQty = $qty + $qtyInCart;
+
+                    if ($blacklistQty > $totalQty) {
+
+                        $this->saveProductInCart($quote, $product, $qty);
+
+                    } else {
+
+                        $newQty = $blacklistQty - $qtyInCart;
+
+                        $newQty ?
+                            $this->saveProductInCart($quote, $product, $newQty, false) :
+                            $this->messageManager->addErrorMessage('Products are not added to the cart. Limit exceeded!');
+                    }
+
+                } else {
+
+                    if ($maxProducts < $qty) {
+
+                        $this->messageManager->addWarningMessage("You can order $sku a maximum of $maxProducts products!");
+
+                    } else {
+
+                        $this->saveProductInCart($quote, $product, $qty);
+
+                    }
+
+                }
 
             }
         } catch (NoSuchEntityException $e) {
 
-            $messageManager->addErrorMessage('This product does not exist!');
+            $this->messageManager->addErrorMessage('This product does not exist!');
 
         } finally {
 
@@ -113,5 +140,35 @@ class Add extends Action
             return $resultRedirect->setPath('anastasia');
 
         }
+    }
+
+    private function checkBlackList($sku)
+    {
+        /** @var \Amasty\AnastasiaModule\Model\ResourceModel\Blacklist\Collection $blacklistCollection */
+        $blacklistCollection = $this->blacklistCollectionFactory->create();
+        $blacklistCollection->addFieldToFilter('sku', ['eq' => $sku]);
+
+        if ($blacklistCollection->count()) {
+            return $blacklistCollection->getFirstItem()['qty'];
+        } else {
+            return 0;
+        }
+    }
+
+    private function saveProductInCart($quote, $product, $qty, $successMessage = true)
+    {
+        $quote->addProduct($product, $qty);
+        $quote->save();
+
+        $successMessage ?
+            $this->messageManager->addSuccessMessage('Product added to cart successfully!') :
+            $this->messageManager->addErrorMessage("Product added to cart in quantity $qty");
+
+        $sku = $product->getSku();
+
+        $this->eventManager->dispatch(
+            'amasty_anastasiamodule_checkaddproduct',
+            ['check_sku' => $sku]
+        );
     }
 }

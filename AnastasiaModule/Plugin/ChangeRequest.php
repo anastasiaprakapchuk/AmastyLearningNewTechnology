@@ -25,7 +25,7 @@ class ChangeRequest
         Observer                                                       $observer
     )
     {
-        if ($this->_request->isAjax()) {
+        if (!$this->_request->isAjax()) {
             return $proceed($observer);
         }
     }
