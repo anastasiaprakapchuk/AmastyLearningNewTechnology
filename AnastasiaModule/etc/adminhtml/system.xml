@@ -39,7 +39,29 @@
                     </depends>
                 </field>
             </group>
-
+            <group id="email" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Email</label>
+                <field id="send_email" translate="label comment" type="text" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Send Email To</label>
+                    <comment>Comma-separated.</comment>
+                    <validate>validate-emails</validate>
+                </field>
+                <field id="blacklist_template" translate="label comment" type="select" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Template for Email</label>
+                    <comment>Email templatechosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+            <group id="cron" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Cron Job</label>
+                <field id="schedule" type="text" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Schedule Job</label>
+                </field>
+            </group>
         </section>
     </system>
 </config>

@@ -1,0 +1,21 @@
+<!--@subject Amasty AnastasiaModule products in Blacklist @-->
+
+<!--@vars
+{
+"var blacklistItem":"Blacklist Item",
+"var blacklistItemSku":"Blacklist Item Sku"
+"var blacklistItemQty":"Blacklist Item Qty"
+}
+@-->
+
+{{template config_path="design/email/header_template"}}
+
+<p>{{trans "Product %blacklistItemSku is in Blacklist in quantity %blacklistItemQty!" blacklistItemSku=$blacklistItemSku blacklistItemQty=$blacklistItemQty}}</p>
+
+{{layout
+    handle="amasty_anastasiamodule_email"
+    blacklist=$blacklistItem
+}}
+
+
+{{template config_path="design/email/footer_template"}}

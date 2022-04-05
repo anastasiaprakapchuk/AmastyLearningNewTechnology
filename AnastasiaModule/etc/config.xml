@@ -7,6 +7,12 @@
                 <enabled>1</enabled>
                 <qty_default>1</qty_default>
             </general>
+            <email>
+                <blacklist_template>anastasia_config_email_blacklist_template</blacklist_template>
+            </email>
+            <cron>
+                <schedule>* * * * *</schedule>
+            </cron>
         </anastasia_config>
     </default>
 </config>
