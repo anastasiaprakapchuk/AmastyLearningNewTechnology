@@ -113,21 +113,15 @@ class Add extends Action
                             $this->saveProductInCart($quote, $product, $newQty, false) :
                             $this->messageManager->addErrorMessage('Products are not added to the cart. Limit exceeded!');
                     }
+                } elseif ($maxProducts < $qty) {
+
+                    $this->messageManager->addWarningMessage("You can order $sku a maximum of $maxProducts products!");
 
                 } else {
 
-                    if ($maxProducts < $qty) {
-
-                        $this->messageManager->addWarningMessage("You can order $sku a maximum of $maxProducts products!");
-
-                    } else {
-
-                        $this->saveProductInCart($quote, $product, $qty);
-
-                    }
+                    $this->saveProductInCart($quote, $product, $qty);
 
                 }
-
             }
         } catch (NoSuchEntityException $e) {
 
@@ -149,7 +143,7 @@ class Add extends Action
         $blacklistCollection->addFieldToFilter('sku', ['eq' => $sku]);
 
         if ($blacklistCollection->count()) {
-            return $blacklistCollection->getFirstItem()['qty'];
+            return $blacklistCollection->getFirstItem()->getQty();
         } else {
             return 0;
         }

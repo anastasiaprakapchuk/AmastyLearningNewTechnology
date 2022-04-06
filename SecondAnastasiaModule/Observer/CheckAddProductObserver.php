@@ -2,6 +2,7 @@
 
 namespace Amasty\SecondAnastasiaModule\Observer;
 
+use Magento\Catalog\Model\Product\Type;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
@@ -42,12 +43,16 @@ class CheckAddProductObserver implements ObserverInterface
 
         $strForSku = $this->configProvider->getForSKU();
 
-        $forSku = preg_split("/[\s,]+/", $strForSku);
+        $forSku = array_map('trim', explode(',', $strForSku));
+
 
         if (in_array($skuInForm, $forSku)) {
             $promoSku = $this->configProvider->getPromoSKU();
             $product = $this->productRepository->get($promoSku);
-            $this->addPromo($product);
+
+            if ($product->getTypeId() === Type::TYPE_SIMPLE) {
+                $this->addPromo($product);
+            }
         }
     }
 

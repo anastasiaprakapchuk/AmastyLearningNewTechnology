@@ -43,7 +43,6 @@ class AmNotification
     public function execute()
     {
         $blacklistItem = $this->blacklistRepository->getById(1);
-        $this->blacklistRepository->setEmailBody(1, 'привет');
 
         $blacklistItemSku = $this->blacklistRepository->getBySku(1);
         $blacklistItemQty = $this->blacklistRepository->getByQty(1);
@@ -78,8 +77,8 @@ class AmNotification
                 'email' => $this->scopeConfig->getEmailSendFrom()
             ])
             ->addTo(
-                $this->scopeConfig->getSendEmailToFromConfig(),
-                'Anastasia')
+                $this->scopeConfig->getSendEmailToFromConfig()
+            )
             ->getTransport();
 
         $transport->sendMessage();

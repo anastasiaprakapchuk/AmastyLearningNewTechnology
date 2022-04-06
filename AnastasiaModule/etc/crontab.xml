@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="amastytest">
         <job name="amasty_anastasiamodule_notification"
              instance="Amasty\AnastasiaModule\Cron\AmNotification"
              method="execute">
-            <schedule>* * * * *</schedule>
             <config_path>anastasia_config/cron/schedule</config_path>
         </job>
     </group>
