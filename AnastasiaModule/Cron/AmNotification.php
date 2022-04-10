@@ -44,8 +44,8 @@ class AmNotification
     {
         $blacklistItem = $this->blacklistRepository->getById(1);
 
-        $blacklistItemSku = $this->blacklistRepository->getBySku(1);
-        $blacklistItemQty = $this->blacklistRepository->getByQty(1);
+        $blacklistItemSku = $blacklistItem->getSku();
+        $blacklistItemQty = $blacklistItem->getQty();
 
         $templateId = 'anastasia_config_email_blacklist_template';
 
@@ -66,7 +66,9 @@ class AmNotification
 
         $messageBody = $template->processTemplate();
 
-        $this->blacklistRepository->setEmailBody(1, $messageBody);
+        $blacklistItem->setData('email_body', $messageBody);
+
+        $this->blacklistRepository->save($blacklistItem);
 
         //отправка на email
         $transport = $this->transportBuilder->setTemplateIdentifier($templateId)

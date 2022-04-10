@@ -35,22 +35,8 @@ class BlacklistRepository
         return $blacklist;
     }
 
-    public function getBySku(int $id)
+    public function save($blacklist)
     {
-        $blacklist = $this->getById($id);
-        return $blacklist->getData('sku');
-    }
-
-    public function getByQty(int $id)
-    {
-        $blacklist = $this->getById($id);
-        return $blacklist->getData('qty');
-    }
-
-    public function setEmailBody(int $id, $emailBody)
-    {
-        $blacklist = $this->getById($id);
-        $blacklist->setData('email_body', $emailBody);
         $this->blacklistResource->save($blacklist);
     }
 }
